@@ -4,7 +4,7 @@ import chatRouter from "./routes/chat.router.js"
 import messagesModel from "./dao/models/messages.model.js";
 import productViewsRouter from './routes/products.views.router.js'
 import sessionRouter from './routes/session.router.js'
-import { passportCall } from "./utils.js";
+import { passportCall, handlePolicies } from "./utils.js";
 
 
 const run = (socketServer, app) => {
@@ -13,7 +13,7 @@ const run = (socketServer, app) => {
         next()
     })
 
-    app.use("/products", passportCall('jwt'), productViewsRouter)
+    app.use("/products", passportCall('jwt'), handlePolicies(['ADMIN']), productViewsRouter)
     app.use("/session", sessionRouter)
 
 
